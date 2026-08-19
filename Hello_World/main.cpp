@@ -1,4 +1,4 @@
-#include <iostream> //Imorting cout
+#include <iostream> //Importing cout
 
 using namespace std; //Don't have to include std::
 
