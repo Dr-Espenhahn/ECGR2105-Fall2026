@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
-#include <cstdlib> //gives us rand() & crand()
-#include <ctime>
+#include <cstdlib> //gives us rand() & srand()
+#include <ctime> //gives us time()
 
 #include <vector>
 
@@ -9,8 +9,8 @@ using namespace std;
 
 int main(){
     string userInput;
-    unsigned int computerInput;
-    const unsigned int GAME_COUNT = 5;
+    unsigned int computerInput; 
+    const unsigned int GAME_COUNT = 5; //unsigned = never negative
     unsigned int compArrayInputs[GAME_COUNT];
     vector<unsigned int> compInputs;
     unsigned int gameCountdown;
