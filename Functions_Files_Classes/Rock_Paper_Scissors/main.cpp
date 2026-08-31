@@ -96,17 +96,11 @@ int main(){
         }
 
 
-        
-
 
     winRate = (double)gameWinCount/(double)gameCount;
-
-
     cout << fixed << setprecision(1) << "\nWin rate: "  << winRate*100 << "%" << endl;
 
 
-    
-    
 
     return 0;
 }
