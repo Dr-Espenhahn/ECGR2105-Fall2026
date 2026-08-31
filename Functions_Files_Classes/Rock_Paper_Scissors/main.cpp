@@ -8,11 +8,34 @@
 
 using namespace std;
 
+const int RPS_THROW_COUNT = 3;
+
+string toLowerString(string upperCaseString){
+    //Make string (char array) lowercase
+    for(int j = 0; j < upperCaseString.length(); j++){
+        upperCaseString.at(j) = tolower(upperCaseString.at(j));
+    }
+
+    return upperCaseString;
+}
+
+int encodeRPS(string userInput, string decodeRPS[RPS_THROW_COUNT]){
+    userInput = toLowerString(userInput);
+
+    for(int i=0; i<RPS_THROW_COUNT; i++){
+        string keyValue = toLowerString(decodeRPS[i]);
+        if(userInput == keyValue)
+            return i;
+    }
+    return -1; // Error
+}
+
 int main(){
     string userInput;
     unsigned int computerInput; 
     vector<unsigned int> compInputs; // Dyamic size arrays
     unsigned int gameCount;
+    string decodeRPS[RPS_THROW_COUNT] = {"Rock", "Paper", "Scissors"}; // MUST be lowercase
 
     int gameWinCount = 0;
     double winRate = 0.0;
@@ -23,7 +46,6 @@ int main(){
     /*
     // Arrays - defined size
     //unsigned int compInputs[gameCount]; //DOES NOT WORK, need to define array size at compilation not run
-
     const unsigned int GAME_COUNT = 5; //unsigned = never negative
     unsigned int compArrayInputs[GAME_COUNT]; //Array size must be defined
     for(int i=0; i < GAME_COUNT; i++){
@@ -58,13 +80,56 @@ int main(){
         cout << "Rock, paper, scissors, Shoot! ";
         cin >> userInput;
 
+        int encodedUserInput = encodeRPS(userInput);
+
+        string resultOutput = "";
+
+        if(encodedUserInput == compInputs.at(i)){
+            resultOutput = "It's a tie! You both threw " + decodeRPS[encodedUserInput];
+        }else{
+            switch(encodedUserInput){
+                case 0:
+                    switch(compInputs.at(i)){
+                        case 1: //Paper
+                            cout << "Computer played " << decodeRPS[compInputs.at(i)] <<  ", you lost." << endl;
+                            break;
+                        case 2: //Scissors
+                            cout << "Computer played scissors, you won!" << endl;
+                            userWin = true;
+                            break;
+                        default:
+                            cout << "Error." << endl;
+                            return 0;
+                    }
+                break;
+                case 1:
+
+                break;
+                case 2:
+
+                break;
+                default:
+                    cout << "Error 1" << endl;
+                break;
+            }
+        }
+
+
+        /*
+        //Moved into function toLowerString()
+
         //Make string (char array) lowercase
         for(int j = 0; j < userInput.length(); j++){
             userInput.at(j) = tolower(userInput.at(j));
         }
+        */
 
-        computerInput = rand() % 3; // 0 = Rock, 1 = Paper, 2 = Scissors
+        //Make string (char array) lowercase
+        //userInput = toLowerString(userInput);
 
+        //computerInput = rand() % 3; // 0 = Rock, 1 = Paper, 2 = Scissors
+
+        
         /*
         int i = 0;
         while(i < userInput.length()){
@@ -87,7 +152,7 @@ int main(){
 
         
             
-        
+        /*
         if(userInput == "rock" ){ //'OR': userInput == "Rock" || userInput == "rock" //Note: 'AND' is &&
             cout << "User input rock." << endl;
             /*
@@ -99,7 +164,7 @@ int main(){
             
             }else{
 
-            }*/ 
+            }*//* 
         
             switch(compInputs.at(i)){
                 case 0: //Rock
@@ -162,6 +227,7 @@ int main(){
             gameWinCount++;
             cout << "Win count: " << gameWinCount << endl;
         }
+        */
     }
 
     // gameWinCount -- integer (int)
