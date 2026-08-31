@@ -1,0 +1,29 @@
+#include <iostream>
+
+using namespace std;
+
+//Prototype 
+int roundHund(int sendVal);
+double roundHund(double sendVal);
+
+main(){
+
+    roundHund(1);
+
+    return 0;
+}
+
+int roundHund(int sendVal){
+    sendVal /= 100;
+    sendVal *= 100;
+    cout << "int" << endl;
+    return sendVal;
+}
+
+double roundHund(double sendVal){
+    sendVal /= 100;
+    sendVal = (int) sendVal;
+    sendVal *= 100.0;
+    cout << "double" << endl;
+    return sendVal;
+}
