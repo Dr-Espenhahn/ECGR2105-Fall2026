@@ -4,6 +4,7 @@
 
 using namespace std;
 
+// Overloaded functions (functions of same name with different passed variables)
 int roundHund(int sendVal){
     sendVal /= 100;
     sendVal *= 100;

@@ -12,10 +12,12 @@ double roundHund(double sendVal);
 
 main(){
 
-    int var1 = 1;
-    int var2 = 2;
+    int var1 = 123;
+    int var2 = 234;
 
-    roundHund(var1, var2);
+    roundHund(var1);
+
+    cout << var1 << endl;
 
     return 0;
 }
