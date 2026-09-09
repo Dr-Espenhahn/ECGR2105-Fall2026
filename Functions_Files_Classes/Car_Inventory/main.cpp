@@ -1,12 +1,15 @@
 #include <iostream>
 #include <vector>
+#include "car.h"
 
 using namespace std;
 
-
-class car{
+/*
+class car{ //object, default private attributes & methods
     private: //Access modifier
     // variables within class = attributes (members)
+    const int MIN_YEAR = 2006;
+    const int MAX_YEAR = 2026;
     string make; 
     string model;
     int year;
@@ -14,87 +17,113 @@ class car{
     string makes[3] = {"Subaru", "Toyta", "Ford"};
 
     public:
+    // Constructor (shares name of class)
+    car(){
+        make = "Unk";
+        model = "Unk";
+        year = 0; 
+    }
+    car(int y){
+       make = "Unk";
+       model = "Unk";
+       year = y; 
+    }
+    car(string setMake, string setModel, int setYear, string setColor){
+        init(setMake, setModel, setYear, setColor);
+    }
+
     // functions within class = method
-    void init(string setMake, string setModel, int setYear, string setColor){
-        if(setYear > 2005 && setYear < 2028){
-            make = setMake;
-            model = setModel;
-            year = setYear;
-            color = setColor;
-        }else if (setYear > 2028){
-           cout << setYear << " cars do not exist." << endl; 
-        }else{
-            cout << "Do not accept this " << setYear << " " << setMake << " " << setModel << endl;
-        }
-        
-    }
-    void init(string setMake, string setModel, string setColor){
-        make = setMake;
-        model = setModel;
-        color = setColor;
-        year = 0;
-    }
-    void init(string setString){
-        for(string findMake : makes){
-            if (setString == findMake){
-                make = setString;
-                model = "Unknown";
-                year = 0;
-                return;
-            }
-        }
-        model = setString;
-        year = 0;
+    void init(string setMake, string setModel, int setYear, string setColor);
+    void init(string setMake, string setModel, string setColor);
+    void init(string setString);
 
-        
-    }
+    void setMake(string setMake);
+    void setModel(string setModel);
+    void setYear(int setYear);
+    void setColor(string setColor);
 
-    void setMake(string setMake){
-        make = setMake;
-    }
-    void setModel(string setModel){
-        model = setModel;
-    }
-    void setYear(int setYear){
-        if(setYear > 2005){
-            year = setYear;
-        }else{
-            cout << "Do not accept this car." << endl;
-        }
-        
-    }
-    void setColor(string setColor){
-        color = setColor;
-    }
-    int getYear(){
-        return year;
-    }
-    string getModel(){
-        return model;
-    }
-    string getMake(){
-        return make;
-    }
-    string getColor(){
-        return color;
-    }
+    int getYear() const;
+    string getModel() const{ return model; }
+    string getMake() const{ return make; }
+    string getColor() const{ return color; }
 };
+
+void car::init(string setMake, string setModel, int setYear, string setColor){
+    if(setYear > MIN_YEAR && setYear < MAX_YEAR){
+        make = setMake;
+        model = setModel;
+        year = setYear;
+        color = setColor;
+    }else if (setYear > MAX_YEAR){
+        cout << setYear << " cars do not exist." << endl; 
+    }else{
+        cout << "Do not accept this " << setYear << " " << setMake << " " << setModel << endl;
+    }
+    
+}
+void car::init(string setMake, string setModel, string setColor){
+    make = setMake;
+    model = setModel;
+    color = setColor;
+}
+void car::init(string setString){
+    for(string findMake : makes){
+        if (setString == findMake){
+            make = setString;
+            return;
+        }
+    }
+    model = setString;
+
+    
+}
+
+void car::setMake(string setMake){
+    make = setMake;
+}
+void car::setModel(string setModel){
+    model = setModel;
+}
+void car::setYear(int setYear){
+    if(setYear > 2005){
+        year = setYear;
+    }else{
+        cout << "Do not accept this car." << endl;
+    }  
+}
+void car::setColor(string setColor){
+    color = setColor;
+}
+int car::getYear() const{ // const method cannot change class attributes
+    /*
+    // It's ok to change local variables
+    int tempVal;
+    cout << tempVal << endl;
+    tempVal = 40;
+    cout << tempVal << endl;
+    */
+   /*
+    return year;
+}
+*/
+
 
 int main(){
 
     vector<car> cars;
-    car car1, car2, car3, car4;
 
-    car1.setMake("Subaru");
-    car1.setModel("Crosstrek");
-    car1.setYear(2019);
-    car1.setColor("White");
+    cars.push_back(car("Subaru", "Crosstrek", 2019, "White"));
+    cars.push_back(car("Toyota", "Highlander", 2001, "Gray"));
+    cars.push_back(car("Ford", "F-150", 2035, "Red"));
+    cars.push_back(car(2010));
 
-    car2.init("Toyota", "Crosstrek", 2001, "Gray");
 
+    /*
+    car car1("Subaru", "Crosstrek", 2019, "White"), car2(2001), car3, car4; // objects of type car
+    car2.init("Toyota", "Highlander", 2001, "Gray");
     car3.init("Ford", "F-150", 2035, "Red");
-
     car4.init("F-150");
+    */
 
     /*
     // For Public attributes:
@@ -113,12 +142,15 @@ int main(){
     car3.color = "Red";
     */
 
+    /*
     cars.push_back(car1);
     cars.push_back(car2);
     cars.push_back(car3);
     cars.push_back(car4);
+    */
 
-    cout << cars.at(3).getModel() << endl;    
+    cout << cars.at(0).getYear() << endl;  
+    cout << cars.at(3).getYear() << endl;    
 
     // For public attribute:
     //cout << cars.at(0).year << endl;
