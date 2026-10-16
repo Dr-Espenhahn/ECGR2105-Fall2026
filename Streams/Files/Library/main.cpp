@@ -11,14 +11,6 @@ int main(){
     //vector<Book> storedBooks;
     Library library;
 
-    Book* book1 = new Book("The Hobbit", "J.R.R. Tolkein");
-    Book* book2 = new Book("1984", "George Orwell");
-    Book* book3 = new Book("Dune", "Frank Herbert");
-
-    library.addBook(book1);
-    library.addBook(book2);
-    library.addBook(book3);
-
     string crInput = "";
     string findTitle;
     Book* foundBook;

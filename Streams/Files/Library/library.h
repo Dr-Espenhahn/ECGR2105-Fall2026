@@ -8,6 +8,7 @@ using namespace std;
 
 class Book{
 private:
+    const string CHECKEDOUT = "1";
     string title;
     string author;
     bool checkedOut;
@@ -17,6 +18,16 @@ public:
         Book::title = title;
         Book::author = author;
         checkedOut = false;
+    }
+    Book(string title, string author, bool checkedOut){
+        Book::title = title;
+        Book::author = author;
+        Book::checkedOut = checkedOut;
+    }
+    Book(string title, string author, string checkedOut){
+        Book::title = title;
+        Book::author = author;
+        Book::checkedOut = (checkedOut == CHECKEDOUT);
     }
 
     string getTitle() const {
@@ -29,7 +40,7 @@ public:
 
     string strCheckedOut() const{
         if(checkedOut)
-            return "1";
+            return CHECKEDOUT;
         return "0";
     }
 
@@ -46,7 +57,7 @@ public:
 class Library{
 private:
     vector<Book*> books;
-    static int libraryCount;
+    static int libraryCount; // persistant across all objects
     int thisLibraryCount;
     //vector<int> copy_count;
 

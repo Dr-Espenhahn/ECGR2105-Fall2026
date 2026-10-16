@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <fstream>
-#include <iomanip>
+#include <sstream>
 #include "library.h"
 
 using namespace std;
@@ -39,6 +39,8 @@ int Library::libraryCount = 0;
 Library::Library(){
     libraryCount++;
     thisLibraryCount = libraryCount;
+
+    loadLibrary();
 }
 
 bool Library::saveLibrary(){
@@ -66,8 +68,28 @@ bool Library::loadLibrary(){
     string libraryName = "library" + to_string(thisLibraryCount) + ".csv";
     loadFile.open(libraryName);
 
-    //TODO: Load data
+    if(!loadFile.is_open()){
+        cout << "Unable to load library file." << endl;
+        return false;
+    }
 
+    string readBook;
+    while(getline(loadFile, readBook)){
+        stringstream ss(readBook);
+        string title, author, checkedOutStr;
+
+
+        if (!getline(ss, title, ',') || !getline(ss, author, ',') || !getline(ss, checkedOutStr)){
+            continue; //skips rest of this iteration in while loop, and rechecks statement (skips invalid lines)
+        }
+
+        Book* book = new Book(title, author, checkedOutStr);
+
+        books.push_back(book);
+
+    }
+
+    return true;
 }
 
 void Library::addBook(Book* book){
