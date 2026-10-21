@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <vector>
+#include <sstream>
 
 using namespace std;
 
@@ -44,6 +45,8 @@ public:
         return "0";
     }
 
+    virtual string getSaveData();
+
     void printInfo() const;
 
     void checkOut();
@@ -53,17 +56,21 @@ public:
 
 
 class EBook : public Book{
-    private: 
-    string formatType; // pdf, 
+    protected: 
+    string formatType; // PDF, EPUB, AZW, IBA
 
     public:
     EBook(string title, string author, string formatType) : Book(title, author){
+        this->formatType = formatType;
+    }
+    EBook(string title, string author, string checkedOut, string formatType) : Book(title, author, checkedOut){
         this->formatType = formatType;
     }
 
     string getFormatType(){
         return this->formatType;
     }
+    string getSaveData() override;
 
     void printInfo() const{};
 
@@ -71,12 +78,24 @@ class EBook : public Book{
 
 class AudioBook : public EBook{
     private:
-    string formatType = "AudioBook";
+    //string formatType = "AudioBook";
 
     public:
     AudioBook(string title, string author, string formatType) : EBook(title, author, formatType){
-        this-> formatType = "AudioBook";
     }
+    AudioBook(string title, string author, string checkedOut, string formatType) : EBook(title, author, checkedOut, formatType){
+    }
+
+    string getSaveData() override;
+
+    void showFormats(){
+        cout << "\n[AudioBook]\n"
+            << "this->formatType: " << this->formatType << '\n'
+            << "AudioBook::formatType: " << AudioBook::formatType << '\n'
+            << "EBook::formatType: " << EBook::formatType << '\n'
+            << "getFormatType(): " << getFormatType() << endl;
+    }
+
 };
 
 

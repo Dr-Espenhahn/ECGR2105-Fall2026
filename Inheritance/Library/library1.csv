@@ -1,3 +1,4 @@
-The Hobbit,J.R.R. Tolkein,0
-1984,George Orwell,0
-Dune,Frank Herbert,0
+B,The Hobbit,J.R.R. Tolkein,0
+B,1984,George Orwell,1
+B,Dune,Frank Herbert,0
+A,title,author,1,mp3

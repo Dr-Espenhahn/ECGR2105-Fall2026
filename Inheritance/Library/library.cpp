@@ -45,6 +45,38 @@ Library::Library(){
     loadLibrary();
 }
 
+string Book::getSaveData(){
+    stringstream ss;
+
+    ss << "B," << getTitle() << ","
+            << getAuthor() << ","
+            << strCheckedOut();
+
+    return ss.str();
+}
+
+string EBook::getSaveData(){
+    stringstream ss;
+
+    ss << "E," << getTitle() << ","
+            << getAuthor() << ","
+            << strCheckedOut() << ","
+            << getFormatType();
+
+    return ss.str();
+}
+
+string AudioBook::getSaveData(){
+    stringstream ss;
+
+    ss << "A," << getTitle() << ","
+            << getAuthor() << ","
+            << strCheckedOut() << ","
+            << getFormatType();
+
+    return ss.str();
+}
+
 bool Library::saveLibrary(){
     ofstream saveFile;
     string libraryName = "library" + to_string(thisLibraryCount) + ".csv";
@@ -55,10 +87,8 @@ bool Library::saveLibrary(){
         return false;
     }
 
-    for(const Book* book : books){
-        saveFile << book->getTitle() << ","
-            << book->getAuthor() << ","
-            << book->strCheckedOut() << "\n";
+    for(Book* book : books){
+        saveFile << book->getSaveData() << "\n";
     }
 
     saveFile.close();
@@ -79,13 +109,41 @@ bool Library::loadLibrary(){
     while(getline(loadFile, readBook)){
         stringstream ss(readBook);
         string title, author, checkedOutStr;
+        Book* book;
 
+        string formatType;
+        char itemType;
+        getline(ss, formatType, ',');
+        itemType = formatType[0];
 
-        if (!getline(ss, title, ',') || !getline(ss, author, ',') || !getline(ss, checkedOutStr)){
-            continue; //skips rest of this iteration in while loop, and rechecks statement (skips invalid lines)
+        switch(itemType){
+            case 'B': //Book
+                if (!getline(ss, title, ',') || !getline(ss, author, ',') || !getline(ss, checkedOutStr, ',')){
+                    continue; //skips rest of this iteration in while loop, and rechecks statement (skips invalid lines)
+                }
+                book = new Book(title, author, checkedOutStr);
+                
+                break;
+
+            case 'E': //EBook
+                if (!getline(ss, title, ',') || !getline(ss, author, ',') || !getline(ss, checkedOutStr, ',') || !getline(ss, formatType, ',')){
+                    continue; //skips rest of this iteration in while loop, and rechecks statement (skips invalid lines)
+                }
+                book = new EBook(title, author, checkedOutStr, formatType);
+
+                break;
+
+            case 'A': //AudioBook
+                string formatType;
+                if (!getline(ss, title, ',') || !getline(ss, author, ',') || !getline(ss, checkedOutStr, ',')|| !getline(ss, formatType, ',')){
+                    continue; //skips rest of this iteration in while loop, and rechecks statement (skips invalid lines)
+                }
+
+                book = new AudioBook(title, author, checkedOutStr, formatType);
+                
+                break;
         }
-
-        Book* book = new Book(title, author, checkedOutStr);
+        
 
         books.push_back(book);
 
@@ -115,12 +173,14 @@ void Library::printLibrary() const {
     for(int i=0; i<books.size(); i++){ //standard "for" loop
         books.at(i); //do something
     }*/
-    cout << "Libary Books: " << endl;
+    cout << "\nLibary Books: " << endl;
 
     for(Book* book : books){ // "for-each" loop
         // book; //--> same thing as books.at(i); in previous look
         book->printInfo();
     }
+
+    cout << endl;
 }
 
 Book* Library::findBook(string title){

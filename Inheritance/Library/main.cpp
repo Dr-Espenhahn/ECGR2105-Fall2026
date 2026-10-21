@@ -15,12 +15,13 @@ int main(){
     string findTitle;
     Book* foundBook;
 
-    AudioBook aBook("title", "author", "mp3");
-    cout << aBook.getFormatType() << endl;;
+    AudioBook* aBook = new AudioBook("title", "author", "mp3");
+    //aBook->showFormats();
 
-    //library.printLibrary();
+    library.addBook(aBook);
 
-    //Book* foundBook = library.findBook("1984");
+    
+
 
     library.printLibrary();
 
