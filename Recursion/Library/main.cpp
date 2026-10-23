@@ -1,0 +1,72 @@
+#include <iostream>
+#include <vector>
+#include "library.h"
+
+using namespace std;
+
+
+
+
+int main(){
+    //vector<Book> storedBooks;
+    Library library;
+
+    string crInput = "";
+    string findTitle; 
+    Book* foundBook;
+
+    //AudioBook* aBook = new AudioBook("title", "author", "mp3");
+    //aBook->showFormats();
+
+    //library.addBook(aBook);
+
+    
+
+
+    library.printLibrary();
+
+    while(crInput != "e"){
+        cout << "Do you want to checkout (c) or return (r): ";
+        getline(cin, crInput);
+        
+        if(crInput == "c"){
+            // Getting user input of book to checkout
+            cout << "Title of book to checkout: ";
+            getline(cin, findTitle);
+            foundBook  = library.findBook(findTitle);
+
+            if(foundBook != nullptr){
+                // cout << foundBook->getTitle() << " exists." << endl;
+                foundBook->checkOut();
+            }else{
+                cout << findTitle << " is not in the library." << endl;
+            }
+        } else if (crInput == "r"){
+            library.printLibrary();
+
+            cout << "Title of book to return: ";
+            getline(cin, findTitle);
+            foundBook = library.findBook(findTitle);
+
+            if(foundBook != nullptr){
+                // cout << foundBook->getTitle() << " exists." << endl;
+                foundBook->returnBook();
+            }else{
+                cout << "Searched book does not exist" << endl;
+            }
+        } else if (crInput == "e"){
+            cout << "Exiting.." << endl;
+        }else {
+            cout << "I don't understand." << endl;
+        }    
+
+        library.printLibrary();
+        cout << endl;
+    }
+    
+
+    //library.~Library(); // Generally, bad form
+    
+
+    return 0;
+}

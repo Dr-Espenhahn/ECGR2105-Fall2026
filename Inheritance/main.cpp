@@ -20,7 +20,7 @@ class Animal {
         cout << name << " is eating." << endl;
     }
 
-    virtual void vocalize() = 0; // pure virtual function
+    virtual void vocalize() = 0; // pure virtual function -- makes class an abstract class
 
     protected:
     string name;

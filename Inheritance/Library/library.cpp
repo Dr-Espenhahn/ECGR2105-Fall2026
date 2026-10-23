@@ -95,17 +95,17 @@ bool Library::saveLibrary(){
     return true;
 }
 
-bool Library::loadLibrary(){
+bool Library::loadLibrary(){ 
     ifstream loadFile;
-    string libraryName = "library" + to_string(thisLibraryCount) + ".csv";
-    loadFile.open(libraryName);
+    string libraryName = "library" + to_string(thisLibraryCount) + ".csv"; // naming file
+    loadFile.open(libraryName); // attempt to open
 
-    if(!loadFile.is_open()){
+    if(!loadFile.is_open()){ // check if file opened
         cout << "Unable to load library file." << endl;
         return false;
     }
 
-    string readBook;
+    string readBook; // each line within file
     while(getline(loadFile, readBook)){
         stringstream ss(readBook);
         string title, author, checkedOutStr;
@@ -115,6 +115,7 @@ bool Library::loadLibrary(){
         char itemType;
         getline(ss, formatType, ',');
         itemType = formatType[0];
+        // TODO: Check formatting/ error detection
 
         switch(itemType){
             case 'B': //Book
@@ -134,7 +135,6 @@ bool Library::loadLibrary(){
                 break;
 
             case 'A': //AudioBook
-                string formatType;
                 if (!getline(ss, title, ',') || !getline(ss, author, ',') || !getline(ss, checkedOutStr, ',')|| !getline(ss, formatType, ',')){
                     continue; //skips rest of this iteration in while loop, and rechecks statement (skips invalid lines)
                 }
@@ -142,6 +142,9 @@ bool Library::loadLibrary(){
                 book = new AudioBook(title, author, checkedOutStr, formatType);
                 
                 break;
+            default: // Unrecognized book format
+                continue; // skips
+                
         }
         
 
