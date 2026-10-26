@@ -10,7 +10,7 @@ void countdown(int n){
 
     cout << n << endl;
 
-    countdown(n - 1); // Recursion
+    countdown(n - 1); // Tail-end recursion
 }
 
 int factorial(int n){
@@ -18,7 +18,12 @@ int factorial(int n){
         return 1;
     }
 
-    return n * factorial(n - 1);
+    if (n > 100){
+        cout << " Too large number for factorial." << endl;
+        return 0;
+    }
+
+    return n * factorial(n - 1); //NOT tail-end recursion
 }
 
 void makeChoice(int choice){
